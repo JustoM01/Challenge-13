@@ -26,11 +26,26 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
+
+  Category.findOne({
+    where: {
+        id: req.params.id
+    },
+    include: [
+     {
+     model: Product,
+     attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+    }
+]
+})
   // be sure to include its associated Products
 });
 
 router.post('/', (req, res) => {
   // create a new category
+  Category.create({
+    category_name: req.body.category_name
+})
 });
 
 router.put('/:id', (req, res) => {
